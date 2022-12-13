@@ -205,13 +205,21 @@ def new_fav_people(id):
 # Delete favorite planet with the id = planet_id
 @app.route('/favorite/planet/<int:id>', methods=['DELETE'])
 def delete_fav_planet(id): 
-    fav = Favplanet.query.filter_by(user_id_plan = 1, planet_fav = id).first()
-    planetfav_delete = fav.serialize()
-
-    # planetfav_delete = Favplanet.query.get(fav_id)
+    planet_delete = Favplanet.query.filter_by(user_id_plan = 1, planet_fav = id).first()
     
-    print(fav)
-    db.session.delete(fav)
+    db.session.delete(planet_delete)
+    db.session.commit()
+    response_body = {
+        "msg": "Borrado! "
+    }
+    return jsonify(response_body), 200
+
+# Delete favorite people with the id = people_id
+@app.route('/favorite/people/<int:id>', methods=['DELETE'])
+def delete_fav_people(id): 
+    people_delete = Favpeople.query.filter_by(user_id_people = 1, people_fav = id).first()
+    
+    db.session.delete(people_delete)
     db.session.commit()
     response_body = {
         "msg": "Borrado! "
